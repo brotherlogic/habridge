@@ -3,6 +3,9 @@ package main
 import (
 	"context"
 
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+
 	pb "github.com/brotherlogic/habridge/proto"
 )
 

@@ -18,7 +18,9 @@ var (
 	metricsPort = flag.Int("metrics_port", 8081, "Metrics port")
 )
 
-type Server struct{}
+type Server struct {
+	token string
+}
 
 func NewServer() *Server {
 	return &Server{}
