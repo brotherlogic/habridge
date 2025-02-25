@@ -59,5 +59,11 @@ spec:
           image: registry.brotherlogic-backend.com/brotherlogic/habridge:0.79.0 # {"$imagepolicy": "flux-system:habridge"}
           ports:
             - containerPort: 8080
+          env:
+            - name: HA_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: hatoken
+                  key: hatoken
       imagePullSecrets:
         - name: regcred

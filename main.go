@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"os"
 
 	pb "github.com/brotherlogic/habridge/proto"
 
@@ -22,14 +23,18 @@ type Server struct {
 	token string
 }
 
-func NewServer() *Server {
-	return &Server{}
+func NewServer(token string) *Server {
+	return &Server{token: token}
 }
 
 func main() {
 	flag.Parse()
 
-	s := NewServer()
+	token := os.Getenv("HA_TOKEN")
+	if token == "" {
+		log.Fatalf("Missing HA_TOKEN")
+	}
+	s := NewServer(token)
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
 	if err != nil {
