@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package habridge;
+
+option go_package = "github.com/brotherlogic/habridge/proto";
+
+message GetStateRequest{
+    string button_id = 1;
+    string user_id = 2;
+}
+
+message GetStateResponse {
+    enum ButtonState {
+        BUTTON_STATE_UNKNONW = 0;
+        BUTTON_STATE_UNAVAILABLE = 1;
+        BUTTON_STATE_OFF = 2;
+        BUTTON_STATE_ON = 3;
+    }
+    ButtonState button_state = 1;
+
+    enum UserState {
+        USER_STATE_UNKNOWN = 0;
+        USER_STATE_HOME = 1;
+        USER_STATE_AWAY = 2;
+    }
+    UserState user_state = 2;
+}
+
+service HabridgeService {
+    rpc GetState(GetStateRequest) returns (GetStateResponse);
+}
