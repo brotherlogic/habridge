@@ -10,6 +10,7 @@ import (
 
 	pb "github.com/brotherlogic/habridge/proto"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
 )
@@ -20,11 +21,16 @@ var (
 )
 
 type Server struct {
-	token string
+	token  string
+	url    string
+	client *resty.Client
 }
 
-func NewServer(token string) *Server {
-	return &Server{token: token}
+func NewServer(token string, url string) *Server {
+	return &Server{
+		token:  token,
+		client: resty.New(),
+		url:    url}
 }
 
 func main() {
@@ -34,7 +40,11 @@ func main() {
 	if token == "" {
 		log.Fatalf("Missing HA_TOKEN")
 	}
-	s := NewServer(token)
+	url := os.Getenv("HA_URL")
+	if token == "" {
+		log.Fatalf("Missing HA_URL")
+	}
+	s := NewServer(token, url)
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
 	if err != nil {
