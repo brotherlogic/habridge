@@ -16,7 +16,7 @@ import (
 )
 
 var (
-	port        = flag.Int("port", 8080, "Server port for grpc traffic")
+	port        = flag.Int("port", 8080, "gRPC Port")
 	metricsPort = flag.Int("metrics_port", 8081, "Metrics port")
 )
 
