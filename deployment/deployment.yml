@@ -65,5 +65,7 @@ spec:
                 secretKeyRef:
                   name: hatoken
                   key: hatoken
+            - name: HA_URL
+              value: "homeassistant:8123"
       imagePullSecrets:
         - name: regcred
