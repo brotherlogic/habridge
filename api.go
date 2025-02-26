@@ -17,7 +17,7 @@ type EntityResponse struct {
 
 func (s *Server) GetState(ctx context.Context, req *pb.GetStateRequest) (*pb.GetStateResponse, error) {
 	var respv *EntityResponse
-	response, err := s.client.R().SetResult(respv).Get(fmt.Sprintf("%v/api/states/%v", s.url, req.GetButtonId()))
+	response, err := s.client.R().SetResult(respv).Get(fmt.Sprintf("http://%v/api/states/%v", s.url, req.GetButtonId()))
 
 	if err != nil {
 		return nil, err
