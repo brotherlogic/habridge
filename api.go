@@ -11,8 +11,8 @@ import (
 )
 
 type EntityResponse struct {
-	Entity_id string `json:"entity_id"`
-	State     string `json:"state"`
+	EntityId string `json:"entity_id"`
+	State    string `json:"state"`
 }
 
 func (s *Server) GetState(ctx context.Context, req *pb.GetStateRequest) (*pb.GetStateResponse, error) {
@@ -28,10 +28,6 @@ func (s *Server) GetState(ctx context.Context, req *pb.GetStateRequest) (*pb.Get
 
 	if response.Status() != "OK" {
 		return nil, status.Errorf(codes.Internal, "Unable to  read: %v", response.Status())
-	}
-
-	if respv == nil {
-		return nil, status.Errorf(codes.Internal, "Bad result: %v", respv)
 	}
 
 	if respv.State == "on" {
