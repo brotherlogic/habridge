@@ -16,7 +16,7 @@ type EntityResponse struct {
 }
 
 func (s *Server) GetState(ctx context.Context, req *pb.GetStateRequest) (*pb.GetStateResponse, error) {
-	var respv *EntityResponse
+	respv := &EntityResponse{}
 
 	response, err := s.client.R().
 		SetAuthToken(s.token).
