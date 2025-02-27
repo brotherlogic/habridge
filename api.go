@@ -30,6 +30,10 @@ func (s *Server) GetState(ctx context.Context, req *pb.GetStateRequest) (*pb.Get
 		return nil, status.Errorf(codes.Internal, "Unable to  read: %v", response.Status())
 	}
 
+	if respv == nil {
+		return nil, status.Errorf(codes.Internal, "Bad result: %v", respv)
+	}
+
 	if respv.State == "on" {
 		return &pb.GetStateResponse{ButtonState: pb.GetStateResponse_BUTTON_STATE_ON}, nil
 	}
