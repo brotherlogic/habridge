@@ -23,7 +23,7 @@ func (s *Server) GetState(ctx context.Context, req *pb.GetStateRequest) (*pb.Get
 		SetResult(respv).Get(fmt.Sprintf("http://%v/api/states/%v", s.url, req.GetButtonId()))
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Unable to read: %w", err)
 	}
 
 	if response.Status() != "OK" {
