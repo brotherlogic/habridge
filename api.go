@@ -11,8 +11,8 @@ import (
 )
 
 type EntityResponse struct {
-	Entity_id string
-	State     string
+	Entity_id string `json:"entity_id"`
+	State     string `json:"state"`
 }
 
 func (s *Server) GetState(ctx context.Context, req *pb.GetStateRequest) (*pb.GetStateResponse, error) {
