@@ -33,5 +33,11 @@ func (s *Server) GetState(ctx context.Context, req *pb.GetStateRequest) (*pb.Get
 	if respv.State == "on" {
 		return &pb.GetStateResponse{ButtonState: pb.GetStateResponse_BUTTON_STATE_ON}, nil
 	}
+	if respv.State == "not_home" {
+		return &pb.GetStateResponse{UserState: pb.GetStateResponse_USER_STATE_AWAY}, nil
+	}
+	if respv.State == "home" {
+		return &pb.GetStateResponse{UserState: pb.GetStateResponse_USER_STATE_HOME}, nil
+	}
 	return nil, status.Errorf(codes.Unimplemented, "Can't interpret: %+v", respv)
 }
