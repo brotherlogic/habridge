@@ -20,7 +20,7 @@ func main() {
 
 	haclient := pb.NewHabridgeServiceClient(conn)
 	status, err := haclient.GetState(context.Background(), &pb.GetStateRequest{
-		ButtonId: "5ee1e8c14cbe2463f12a49829ec1415d",
+		ButtonId: "device_tracker.pixel_7",
 	})
 
 	fmt.Printf("%v [%v]\n", status, err)
