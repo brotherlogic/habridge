@@ -1,18 +1,22 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"log"
 	"net"
 	"net/http"
 	"os"
-
-	pb "github.com/brotherlogic/habridge/proto"
+	"time"
 
 	"github.com/go-resty/resty/v2"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
+
+	pb "github.com/brotherlogic/habridge/proto"
+
+	auth_client "github.com/brotherlogic/auth/client"
 )
 
 var (
@@ -44,13 +48,21 @@ func main() {
 	if token == "" {
 		log.Fatalf("Missing HA_URL")
 	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	authModule, err := auth_client.NewAuthInterceptor(ctx)
+	if err != nil {
+		log.Fatalf("Unable to register with auth: %v", err)
+	}
+	cancel()
+
 	s := NewServer(token, url)
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
 	if err != nil {
 		log.Fatalf("gramophile is unable to listen on the grpc port %v: %v", *port, err)
 	}
-	gs := grpc.NewServer()
+	gs := grpc.NewServer(grpc.UnaryInterceptor(authModule.AuthIntercept))
 	pb.RegisterHabridgeServiceServer(gs, s)
 	go func() {
 		if err := gs.Serve(lis); err != nil {

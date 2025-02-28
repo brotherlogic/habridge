@@ -3,6 +3,7 @@ module github.com/brotherlogic/habridge
 go 1.23.2
 
 require (
+	github.com/brotherlogic/auth v0.14.0
 	github.com/go-resty/resty/v2 v2.16.5
 	github.com/prometheus/client_golang v1.21.0
 	google.golang.org/grpc v1.70.0
@@ -20,5 +21,5 @@ require (
 	golang.org/x/net v0.35.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/text v0.22.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250224174004-546df14abb99 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250227231956-55c901821b1e // indirect
 )
