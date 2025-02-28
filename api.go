@@ -11,8 +11,8 @@ import (
 )
 
 type EntityResponse struct {
-	Entity_id string `json:"entity_id"`
-	State     string `json:"state"`
+	EntityId string `json:"entity_id"`
+	State    string `json:"state"`
 }
 
 func (s *Server) GetState(ctx context.Context, req *pb.GetStateRequest) (*pb.GetStateResponse, error) {
@@ -23,15 +23,11 @@ func (s *Server) GetState(ctx context.Context, req *pb.GetStateRequest) (*pb.Get
 		SetResult(respv).Get(fmt.Sprintf("http://%v/api/states/%v", s.url, req.GetButtonId()))
 
 	if err != nil {
-		return nil, fmt.Errorf("Unable to read: %w", err)
+		return nil, fmt.Errorf("unable to read: %w", err)
 	}
 
-	if response.Status() != "OK" {
-		return nil, status.Errorf(codes.Internal, "Unable to  read: %v", response.Status())
-	}
-
-	if respv == nil {
-		return nil, status.Errorf(codes.Internal, "Bad result: %v", respv)
+	if response.Status() != "200 OK" {
+		return nil, status.Errorf(codes.Internal, "Unable to read: %v", response.Status())
 	}
 
 	if respv.State == "on" {
