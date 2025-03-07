@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM golang:1.23.2 AS build
+FROM golang:1.24.0 AS build
 
 WORKDIR $GOPATH/src/github.com/brotherlogic/habridge
 
