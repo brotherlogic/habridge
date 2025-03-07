@@ -29,7 +29,7 @@ func (s *Server) GetState(ctx context.Context, req *pb.GetStateRequest) (*pb.Get
 	}
 
 	if response.Status() != "200 OK" {
-		return nil, status.Errorf(codes.Internal, "Unable to read from %v: %v", response.Status())
+		return nil, status.Errorf(codes.Internal, "Unable to read from %v: %v", url, response.Status())
 	}
 
 	if respv.State == "on" {
@@ -39,6 +39,7 @@ func (s *Server) GetState(ctx context.Context, req *pb.GetStateRequest) (*pb.Get
 		return &pb.GetStateResponse{UserState: pb.GetStateResponse_USER_STATE_AWAY}, nil
 	}
 	if respv.State == "home" {
+
 		return &pb.GetStateResponse{UserState: pb.GetStateResponse_USER_STATE_HOME}, nil
 	}
 	return nil, status.Errorf(codes.Unimplemented, "Can't interpret: %+v", respv)
