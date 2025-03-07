@@ -29,7 +29,7 @@ func (s *Server) GetState(ctx context.Context, req *pb.GetStateRequest) (*pb.Get
 	}
 
 	if response.Status() != "200 OK" {
-		return nil, status.Errorf(codes.Internal, "Unable to read: %v", response.Status())
+		return nil, status.Errorf(codes.Internal, "Unable to read from %v: %v", response.Status())
 	}
 
 	if respv.State == "on" {
