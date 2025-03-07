@@ -18,12 +18,14 @@ type EntityResponse struct {
 func (s *Server) GetState(ctx context.Context, req *pb.GetStateRequest) (*pb.GetStateResponse, error) {
 	respv := &EntityResponse{}
 
+	url := fmt.Sprintf("http://%v/api/states/%v", s.url, req.GetButtonId())
+
 	response, err := s.client.R().
 		SetAuthToken(s.token).
-		SetResult(respv).Get(fmt.Sprintf("http://%v/api/states/%v", s.url, req.GetButtonId()))
+		SetResult(respv).Get(url)
 
 	if err != nil {
-		return nil, fmt.Errorf("unable to read: %w", err)
+		return nil, fmt.Errorf("unable to read (%v): %w", url, err)
 	}
 
 	if response.Status() != "200 OK" {
